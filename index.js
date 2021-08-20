@@ -7,6 +7,7 @@ const { join } = require("path");
 const { TOKEN, PREFIX } = require("./util/SalmanebotUtil");
 const i18n = require("i18n");
 const answers = require("./answers.json");
+const salmane = require("./salmane.json");
 
 const client = new Client({
   disableMentions: "everyone",
@@ -51,7 +52,7 @@ i18n.configure({
  */
 client.on("ready", () => {
   console.log(`${client.user.username} ready!`);
-  console.log(answers);
+  //console.log(answers);
   client.user.setActivity(`Fakhama 🗽 Bot`, { type: "LISTENING" });
 });
 client.on("warn", (info) => console.log(info));
@@ -71,37 +72,45 @@ client.on("message", async (message) => {
   if (!message.guild) return;
 
   const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(PREFIX)})\\s*`);
-  const channel = client.channels.cache.get('875251215229939732');
   
   if (!prefixRegex.test(message.content)){
     if(message.content == 'joy'){
-      return channel.send("<@242104158000250882> To9 !");
+      return message.channel.send("<@242104158000250882> To9 !");
     }
     else if(message.content == 'jiji'){
-      return channel.send("<@775472342347808818> 💛 ", {files:["./sina.jpg"]});
+      return message.channel.send("<@775472342347808818> 💛 ", {files:["./sina.jpg"]});
     }
     else if(message.content == 'baba'){
-      return channel.send("<@740636163978821653> 7yato kamla khedam !");
+      return message.channel.send("<@740636163978821653> 7yato kamla khedam !");
     }
     else if(message.content == 'bacha'){
-      return channel.send("<@773932024561926155> l9awlih chi 9afiya alkhout !");
+      return message.channel.send("<@773932024561926155> l9awlih chi 9afiya alkhout !");
     }
     else if(message.content == 'maoqly'){
-      return channel.send("<@192023732368179201> zebi fkerro me9ly !", {files:["./maoqly.png"]});
+      return message.channel.send("<@192023732368179201> zebi fkerro me9ly !", {files:["./maoqly.png"]});
     }
     else if(message.content == 'maria'){
-      return channel.send("<@488191257991184384> 🤍 ");
+      return message.channel.send("<@488191257991184384> 🤍 ");
     }
     else if(message.content == 'salmane'){
-      return channel.send("<@401761897982066708> I love you :heart: ");
+      for(var i = 0; i < 1000000; i++){
+        const random = salmane[Math.floor(Math.random() * salmane.length)];
+        return message.channel.send(random);
+      }
     }
     else if(message.content == 'hind'){
-      return channel.send("<@779080691295453191> ana 3ay9a o li majawbnish kandirlih mute ! :woman_gesturing_ok: ", {files:["./hind.gif"]});
+      return message.channel.send("<@779080691295453191> ana 3ay9a o li majawbnish kandirlih mute ! :woman_gesturing_ok: ", {files:["./hind.gif"]});
+    }
+    else if(message.content == 'sara'){
+      return message.channel.send("Ana <@759534767070249030> o fiya lfara :rat: ");
+    }
+    else if(message.content == ('le7keyek' || '<@760942562570666044>')){
+      return message.channel.send("Ana <@760942562570666044> aji drebli zkeyek :eggplant: :peach:  ");
     }
     /*else{
     for(var i = 0; i < 1000000; i++){
       const randomElement = answers[Math.floor(Math.random() * answers.length)];
-      return channel.send(randomElement);
+      return message.reply(randomElement);
     }
   }*/
     else return;

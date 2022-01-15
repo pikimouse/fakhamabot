@@ -5,15 +5,19 @@ const { Client, Collection, GuildMember } = require("discord.js");
 const { readdirSync, write } = require("fs");
 const { join } = require("path");
 const { TOKEN, PREFIX } = require("./util/SalmanebotUtil");
+const keepAlive = require('./server');
 const i18n = require("i18n");
 const answers = require("./answers.json");
 const salmane = require("./salmane.json");
+const bacha = require("./bacha.json");
+const Discord = require('discord.js')
 
 const client = new Client({
   disableMentions: "everyone",
   restTimeOffset: 0
 });
-
+keepAlive();
+const bot = new Discord.Client()
 client.login(TOKEN);
 client.commands = new Collection();
 client.prefix = PREFIX;
@@ -47,17 +51,25 @@ i18n.configure({
   }
 });
 
+
 /**
  * Client Events
  */
-client.on("ready", () => {
+client.on('ready', () => {
+    /**const guild = client.guilds.cache.get("856648689879220235");
+    const VoiceCountChannel = guild.channels.cache.get("879512555939303444");*/
+    /**setInterval(() => {
+        /* At the first filter all guild channels to type = voice, then map their members count and get summ with reduce */
+        /**let membersInVoice = guild.channels.cache.filter(channel => channel.type === 'voice').map(c => c.members.size).reduce((a, b) => a + b, 0);
+        VoiceCountChannel.setName("In Voice: "+membersInVoice);
+        console.log(membersInVoice)
+    }, 50000);*/
   console.log(`${client.user.username} ready!`);
   //console.log(answers);
   client.user.setActivity(`Fakhama 🗽 Bot`, { type: "LISTENING" });
 });
 client.on("warn", (info) => console.log(info));
 client.on("error", console.error);
-
 /**
  * Import all commands
  */
@@ -73,48 +85,53 @@ client.on("message", async (message) => {
 
   const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(PREFIX)})\\s*`);
   
-  if (!prefixRegex.test(message.content)){
-    if(message.content == 'joy'){
-      return message.channel.send("<@242104158000250882> To9 !");
+  if(message.content.toLowerCase() == 'fakhama'){
+    //console.log(message.author.id);
+    if(message.author.id =="740636163978821653"){
+      return message.channel.send("<@&922953681102590002>  Ayna antom ya atfal");
     }
-    else if(message.content == 'jiji'){
-      return message.channel.send("<@775472342347808818> 💛 ", {files:["./sina.jpg"]});
-    }
-    else if(message.content == 'baba'){
+  }
+    if(message.content.toLowerCase() =="baba"){
       return message.channel.send("<@740636163978821653> 7yato kamla khedam !");
     }
-    else if(message.content == 'bacha'){
-      return message.channel.send("<@773932024561926155> l9awlih chi 9afiya alkhout !");
-    }
-    else if(message.content == 'maoqly'){
-      return message.channel.send("<@192023732368179201> zebi fkerro me9ly !", {files:["./maoqly.png"]});
-    }
-    else if(message.content == 'maria'){
-      return message.channel.send("<@488191257991184384> 🤍 ");
-    }
-    else if(message.content == 'salmane'){
+    else if(message.content.toLowerCase() == 'bacha'){
       for(var i = 0; i < 1000000; i++){
-        const random = salmane[Math.floor(Math.random() * salmane.length)];
-        return message.channel.send(random);
+        const random = bacha[Math.floor(Math.random() * bacha.length)];
+        return message.channel.send(random,);
       }
     }
-    else if(message.content == 'hind'){
+    else if(message.content.toLowerCase() == 'maoqly'){
+      return message.channel.send("<@192023732368179201> zebi fkerro me9ly !", {files:["./maoqly.png"]});
+    }
+    /*else if(message.content.toLowerCase() == 'fakhama'){
+      return message.channel.send("<@&922953681102590002>  Ayna antom ya atfal");
+    }*/
+    else if(message.content.toLowerCase() == ("salmane" || "salman")){
+      for(var i = 0; i < 100; i++){
+        const random = salmane[Math.floor(Math.random() * salmane.length)];
+        return message.channel.send("<@401761897982066708>"+random/*,  {files:["./pp.png"]}message.author.displayAvatarURL({ format: 'png', size: 1000 })*/);
+      }
+    }
+    else if(message.content.toLowerCase() == 'hind'){
       return message.channel.send("<@779080691295453191> ana 3ay9a o li majawbnish kandirlih mute ! :woman_gesturing_ok: ", {files:["./hind.gif"]});
     }
-    else if(message.content == 'sara'){
-      return message.channel.send("Ana <@759534767070249030> o fiya lfara :rat: ");
+    else if(message.content.toLowerCase() == 'oyeeh'){
+      return message.channel.send("<@744207065358008390>  wash a to9", //{files:["./hind.gif"]}
+      );
     }
-    else if(message.content == ('le7keyek' || '<@760942562570666044>')){
+    else if(message.content.toLowerCase() == 'sara'){
+      return message.channel.send("<@759534767070249030> nti l7ob :purple_heart: ");
+    }
+    else if(message.content.toLowerCase() == ('le7keyek' || '<@760942562570666044>')){
       return message.channel.send("Ana <@760942562570666044> aji drebli zkeyek :eggplant: :peach:  ");
     }
-    /*else{
-    for(var i = 0; i < 1000000; i++){
+    else{
+    /*for(var i = 0; i < 1000000; i++){
       const randomElement = answers[Math.floor(Math.random() * answers.length)];
       return message.reply(randomElement);
-    }
-  }*/
-    else return;
+    }*/
   }
+    //else return;
 
   const [, matchedPrefix] = message.content.match(prefixRegex);
 
